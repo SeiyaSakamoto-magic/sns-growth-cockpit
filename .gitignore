@@ -1,0 +1,15 @@
+# 生成物（npm run demo-data / build で毎回作り直せる）
+web/public/data/
+web/node_modules/
+web/dist/
+web/.vite/
+web/.wrangler/
+*.tsbuildinfo
+
+# 秘密情報・実データは入れない
+.env
+.env.*
+data/
+
+.DS_Store
+*.log

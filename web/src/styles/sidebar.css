@@ -1,0 +1,179 @@
+/* サイドバー・レイアウト（global.css を上書き） */
+.app-shell { min-height: 100%; display: flex; flex-direction: row; align-items: stretch; }
+
+.sidebar {
+  width: 266px; flex: none;
+  background: var(--surface); border-right: 1px solid var(--border);
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column; transition: width 0.16s ease;
+}
+.app-shell.collapsed .sidebar { width: 70px; }
+
+.sb-head { display: flex; align-items: center; gap: 8px; padding: 14px; border-bottom: 1px solid var(--border); }
+.sb-brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; font-family: var(--font-serif); font-weight: 700; }
+.sb-brand .logo { width: 30px; height: 30px; border-radius: 8px; flex: none; background: linear-gradient(135deg, #e08a5f, #c4452f); display: grid; place-items: center; color: #fff; font-weight: 800; font-family: var(--font); }
+.sb-title { display: flex; flex-direction: column; line-height: 1.2; font-size: 15px; white-space: nowrap; overflow: hidden; }
+.sb-title small { color: var(--text-3); font-weight: 500; font-size: 11px; font-family: var(--font); }
+.sb-toggle { border: none; background: var(--surface-2); width: 26px; height: 26px; border-radius: 7px; cursor: pointer; color: var(--text-2); flex: none; font-size: 13px; }
+.sb-toggle:hover { color: var(--text); }
+.app-shell.collapsed .sb-head { flex-direction: column; gap: 10px; padding: 14px 0; }
+.app-shell.collapsed .sb-brand { justify-content: center; }
+
+.sb-nav { padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+.sb-section { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); font-weight: 700; padding: 16px 10px 6px; }
+.sb-group { display: flex; flex-direction: column; gap: 2px; }
+.sb-group-name { font-size: 12px; color: var(--text-2); font-weight: 700; padding: 10px 10px 4px; }
+.sb-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 9px; color: var(--text-2); font-weight: 600; font-size: 14px; cursor: pointer; }
+.sb-item:hover { background: var(--surface-2); color: var(--text); }
+.sb-item.active { background: var(--accent-soft); color: var(--accent-text); }
+.sb-ic { width: 22px; text-align: center; flex: none; font-size: 15px; }
+.acct-item { padding: 6px 10px; }
+.sb-acct-label { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; }
+.sb-acct-label .l1 { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 600; }
+.sb-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.sb-dot.ok { background: var(--ok); } .sb-dot.warning { background: var(--warn); }
+.sb-dot.critical { background: var(--crit); } .sb-dot.unknown { background: var(--text-3); }
+.app-shell.collapsed .sb-item { justify-content: center; padding: 8px 0; }
+
+.main { flex: 1; min-width: 0; }
+
+@media (max-width: 760px) {
+  .sidebar { width: 66px; }
+  .sb-title, .sb-acct-label, .sb-section, .sb-group-name { display: none; }
+  .sb-head { justify-content: center; padding: 12px 0; }
+  .sb-toggle { display: none; }
+  .sb-item { justify-content: center; padding: 8px 0; }
+}
+
+/* ===== アカウント診断: 結果→要因→打ち手の3ステップ ===== */
+.diag-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+.diag-step { min-width: 0; padding: 0 20px; border-left: 1px solid var(--border); }
+.diag-step:first-child { padding-left: 0; border-left: none; }
+.diag-step:last-child { padding-right: 0; }
+@media (max-width: 1080px) {
+  .diag-flow { grid-template-columns: 1fr; gap: 18px; }
+  .diag-step { padding: 0; border-left: none; border-top: 1px solid var(--border); padding-top: 16px; }
+  .diag-step:first-child { border-top: none; padding-top: 0; }
+}
+.diag-step-h { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.diag-step-n {
+  flex: none; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 12px; font-weight: 700;
+  display: grid; place-items: center; line-height: 1;
+}
+.diag-step-t { font-size: 15px; font-weight: 700; color: var(--text); }
+.diag-step .sec-sub { margin-left: 0; }
+
+.diag-headline { font-size: 15px; font-weight: 600; line-height: 1.6; margin-bottom: 10px; }
+.diag-stats { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: 13px; color: var(--text-2); margin-bottom: 14px; }
+.diag-stats b { color: var(--text); }
+.diag-pill { padding: 2px 9px; border-radius: 999px; font-weight: 600; font-size: 12px; }
+.diag-pill.crit { background: var(--crit-soft); color: var(--crit); }
+.diag-pill.warn { background: var(--warn-soft); color: var(--warn-text); }
+.diag-pill.ok { background: var(--ok-soft); color: var(--ok); }
+.diag-dir { margin-left: auto; font-weight: 700; color: var(--accent-text); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; font-size: 12px; }
+/* 好調/弱い企画カード: サムネ左・本文右（キャプション文より画像の方が「どの企画か」が速い） */
+.diag-post {
+  display: flex; gap: 10px; align-items: flex-start;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px;
+  cursor: pointer; transition: border-color .12s, background .12s; margin-bottom: 8px;
+}
+.diag-post:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.diag-post.good { border-left: 3px solid var(--ok); }
+.diag-post.bad { border-left: 3px solid var(--crit); }
+.diag-post-body { min-width: 0; flex: 1; }
+.diag-post-label { font-size: 11px; font-weight: 700; color: var(--text-3); letter-spacing: .03em; }
+.diag-post-cap { font-size: 13px; font-weight: 600; margin: 3px 0 6px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.diag-post-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; flex-wrap: wrap; }
+.diag-row-t { font-size: 12px; font-weight: 700; color: var(--text-2); margin-bottom: 6px; }
+.diag-recs { margin-bottom: 14px; }
+.diag-recs ul { margin: 0; padding-left: 18px; }
+.diag-recs li { font-size: 13px; line-height: 1.7; color: var(--text); }
+.diag-weekly { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 13px; line-height: 1.6; }
+
+/* フック別 拡散率の横バー（最大のフックだけ濃色＝勝ち筋を1秒で伝える） */
+.hook-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 12px; }
+.hook-name { flex: 0 0 88px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hook-track { flex: 1; min-width: 40px; background: var(--border); border-radius: 4px; height: 12px; overflow: hidden; }
+.hook-track i { display: block; height: 100%; border-radius: 4px; }
+.hook-val { flex: 0 0 auto; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ===== 横はみ出し防止（テーブルtrackの膨張で右カラムが見切れるのを修正） ===== */
+.app-shell { width: 100%; max-width: 100vw; }
+.main { min-width: 0; }
+.grid-2 { min-width: 0; }
+.grid-2 > * { min-width: 0; }
+
+/* ===== モーダル動画（その場再生） ===== */
+.modal-video { width: 100%; max-height: 74vh; aspect-ratio: 9 / 16; background: #000; object-fit: contain; display: block; }
+.modal-embed { width: 100%; height: 560px; border: 0; display: block; }
+
+/* ===== サイドバー2行ラベル（client名＋表示名） ===== */
+.sb-acct-label { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.sb-l1 { font-size: 13px; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-l2 { font-size: 11px; color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-item.active .sb-l1 { color: var(--accent-text); }
+.acct-item { padding: 7px 10px; }
+.avatar { overflow: hidden; }
+
+/* ===== サイドバーはみ出し防止（ラベル省略を確実に効かせる） ===== */
+.sidebar { overflow-x: hidden; }
+.sb-item { max-width: 100%; overflow: hidden; }
+.sb-acct-label { overflow: hidden; min-width: 0; }
+.sb-l1, .sb-l2 { display: block; max-width: 100%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ===== ブロック見出し（アカウント全体 / 投稿分析） ===== */
+.block-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+.block-title { font-family: var(--font-serif); font-size: 18px; font-weight: 600; color: var(--text); }
+
+/* ===== スマホ対応の強化 ===== */
+@media (max-width: 760px) {
+  .content { padding: 16px 12px; }
+  .tabs { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button { white-space: nowrap; flex: none; }
+  .detail-head h1 { font-size: 20px; }
+  .kpi .value { font-size: 25px; }
+  .block-head { gap: 8px; }
+  .modal-card { width: 100%; }
+}
+@media (max-width: 520px) {
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .segmented button { padding: 6px 10px; font-size: 12px; }
+  .detail-head .big-avatar { width: 46px; height: 46px; font-size: 17px; }
+}
+
+/* ===== ゼロベース再設計（2026-07 P0）: 例外駆動サイドバー ===== */
+
+/* 1行レイアウト（クライアント名 + Δ再生 + 状態ドット）。表示名はホバーtooltip */
+.sb-acct-line {
+  flex: 1; min-width: 0; font-size: 13px; font-weight: 600; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sb-item.active .sb-acct-line { color: var(--accent-text); }
+.sb-delta { flex: none; font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.acct-item { padding: 5px 10px; }
+.acct-item .avatar { width: 26px; height: 26px; font-size: 11px; }
+
+/* 要対応グループ見出し */
+.sb-section.attn { color: var(--crit); }
+
+/* 🔔 要対応コメント */
+.sb-bell { position: relative; border: none; background: transparent; width: 100%; text-align: left; font: inherit; }
+.bell-badge {
+  margin-left: auto; flex: none;
+  min-width: 19px; height: 19px; padding: 0 5px; border-radius: 999px;
+  background: var(--crit); color: #fff; font-size: 11px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.app-shell.collapsed .sb-bell .bell-badge {
+  position: absolute; top: 2px; right: 8px; margin: 0;
+}
+
+/* 検索ボックス */
+.sb-search {
+  margin: 8px 10px 0; padding: 7px 10px; font: inherit; font-size: 12.5px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface-2); color: var(--text); width: calc(100% - 20px);
+}
+.sb-search:focus { outline: none; border-color: var(--accent); background: var(--surface); }
